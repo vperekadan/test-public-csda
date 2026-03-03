@@ -8,6 +8,9 @@ on:
 jobs:
   release-and-sync:
     runs-on: ubuntu-latest
+    # Safety guard: only run in the private repo so that even though this
+    # workflow file gets mirrored to test-public-csda, it won't execute there.
+    if: github.repository == 'vperekadan/test-private-csda'
 
     steps:
       # Generate a short-lived installation token scoped to both repos.
