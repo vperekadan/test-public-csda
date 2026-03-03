@@ -1,0 +1,32 @@
+name: Release please
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    outputs:
+      prs: ${{ steps.release-please.outputs.prs }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/create-github-app-token@v2
+        id: generate-token
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+      - name: CSDA Version
+        id: csda-version
+        uses: gadomski/csda-version@v0.2.3
+      - uses: googleapis/release-please-action@v4
+        id: release-please
+        with:
+          token: ${{ steps.generate-token.outputs.token }}
+          release-type: python
+          release-as: ${{ steps.csda-version.outputs.version }}
