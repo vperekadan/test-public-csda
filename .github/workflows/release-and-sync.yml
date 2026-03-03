@@ -1,0 +1,64 @@
+name: Release and Sync to Public
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release-and-sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Generate a short-lived installation token scoped to both repos.
+      # The token is automatically revoked at the end of this job.
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: |
+            test-private-csda
+            test-public-csda
+
+      # Full history (fetch-depth: 0) is required to preserve commit history
+      # when pushing to the public repo and for accurate tag detection.
+      - name: Checkout with full history
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          fetch-depth: 0
+
+      # Auto-bumps the patch version on every merge (e.g. v1.0.0 → v1.0.1).
+      # Use commit message prefixes to override: #major, #minor, or #patch.
+      - name: Bump version and push tag
+        id: tag
+        uses: anothrNick/github-tag-action@1
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+          DEFAULT_BUMP: patch
+          WITH_V: true
+          TAG_CONTEXT: repo
+
+      # Creates a GitHub Release on the private repo, auto-generating
+      # release notes from merged PRs and commits since the last release.
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          gh release create "${{ steps.tag.outputs.new_tag }}" \
+            --title "Release ${{ steps.tag.outputs.new_tag }}" \
+            --generate-notes
+
+      # Mirrors the full commit history and tags to the public repo.
+      # --force handles the first-run case where the public repo was initialized
+      # with its own commits. Subsequent pushes are clean fast-forwards.
+      - name: Push full history to public repo
+        env:
+          APP_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          git remote add public \
+            https://x-access-token:${APP_TOKEN}@github.com/${{ github.repository_owner }}/test-public-csda.git
+          git push public main --follow-tags --force
