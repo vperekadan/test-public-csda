@@ -12,6 +12,9 @@ permissions:
 jobs:
   release-please:
     runs-on: ubuntu-latest
+    # Safety guard: only run in the private repo so that even though this
+    # workflow file gets mirrored to test-public-csda, it won't execute there.
+    if: github.repository == 'vperekadan/test-private-csda'
     outputs:
       prs: ${{ steps.release-please.outputs.prs }}
     steps:
