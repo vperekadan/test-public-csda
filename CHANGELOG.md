@@ -1,5 +1,13 @@
 # Changelog
 
+## [26.2.4-1](https://github.com/vperekadan/test-private-csda/compare/v26.2.4-0...v26.2.4-1) (2026-03-03)
+
+
+### Features
+
+* update readme ([af42abf](https://github.com/vperekadan/test-private-csda/commit/af42abfd2e3d87b8c4bcac1e8144185702a9409d))
+* update readme ([ae67f06](https://github.com/vperekadan/test-private-csda/commit/ae67f06fdbe5cff79c46ce2324f15e387cfde135))
+
 ## 26.2.4-0 (2026-03-03)
 
 
