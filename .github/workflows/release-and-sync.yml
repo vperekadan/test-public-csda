@@ -33,6 +33,7 @@ jobs:
         with:
           token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
+          ref: main
 
       # Mirrors the full commit history and tags to the public repo.
       # --force handles the first-run case where the public repo was initialized
@@ -43,7 +44,7 @@ jobs:
         run: |
           git remote add public \
             https://x-access-token:${APP_TOKEN}@github.com/${{ github.repository_owner }}/test-public-csda.git
-          git push public main --follow-tags --force
+          git push public HEAD:main --follow-tags --force
 
       # Creates the same release on the public repo using the title and notes
       # from the release-please release that triggered this workflow.
