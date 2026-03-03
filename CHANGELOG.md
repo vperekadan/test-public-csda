@@ -1,5 +1,13 @@
 # Changelog
 
+## [26.2.4-4](https://github.com/vperekadan/test-private-csda/compare/v26.2.4-3...v26.2.4-4) (2026-03-03)
+
+
+### Bug Fixes
+
+* testing ([a31864c](https://github.com/vperekadan/test-private-csda/commit/a31864caabc9126ebbde650413e3c7d275f45f2b))
+* testing ([030d28c](https://github.com/vperekadan/test-private-csda/commit/030d28cc492651f2bc8e752ac92980556b5d490c))
+
 ## [26.2.4-3](https://github.com/vperekadan/test-private-csda/compare/v26.2.4-2...v26.2.4-3) (2026-03-03)
 
 
