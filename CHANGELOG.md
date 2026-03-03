@@ -1,5 +1,13 @@
 # Changelog
 
+## [26.2.4-3](https://github.com/vperekadan/test-private-csda/compare/v26.2.4-2...v26.2.4-3) (2026-03-03)
+
+
+### Features
+
+* adding guardrail ([a75b488](https://github.com/vperekadan/test-private-csda/commit/a75b48815b9aab1bacfab140506983fc52261297))
+* adding guardrail ([a9c9b84](https://github.com/vperekadan/test-private-csda/commit/a9c9b84aa32b848aabb6d77abfca76d57a6a387a))
+
 ## [26.2.4-2](https://github.com/vperekadan/test-private-csda/compare/v26.2.4-1...v26.2.4-2) (2026-03-03)
 
 
